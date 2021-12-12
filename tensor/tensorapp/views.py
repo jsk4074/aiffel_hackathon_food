@@ -50,6 +50,7 @@ def predict_form(request):
 		image = cv2.resize(image, dsize=(180, 180)).astype(np.uint8).copy()
 
 		result = predict_image(image)
+		
 		form.save()
 
 	return render(request, 'tensorapp/predict.html', {'form':form, 'prediction':result})
@@ -61,8 +62,7 @@ def predict_image(img):
 
 	data_augmentation = keras.Sequential(
 		[
-		layers.RandomFlip("horizontal",
-							input_shape=(180,180,3)),
+		layers.RandomFlip("horizontal", input_shape=(180,180,3)),
 		layers.RandomRotation(0.1),
 		layers.RandomZoom(0.1),
 		]
